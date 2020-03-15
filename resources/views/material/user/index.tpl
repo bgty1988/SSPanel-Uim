@@ -312,6 +312,8 @@ table tr td:first-child {
                                                     <input type="text" class="input form-control form-control-monospace cust-link col-xx-12 col-sm-8 col-lg-7" name="input1" value="{$subUrl}{$ssr_sub_token}" readonly="true">
                                                     <button class="copy-text btn btn-subscription col-xx-12 col-sm-3 col-lg-2" type="button" data-clipboard-text="{$subUrl}{$ssr_sub_token}">点击复制</button>
                                                 </div>
+                                                <p>您好，目前的 加密方式，混淆，协议请您选用 ShadowsocksR 客户端来连接</p>
+                                                <p>请通过订阅链接，导入您的节点，并定期更新~</p>
                                                 {/if}
                                             {$pre_user = URL::cloneUser($user)}
 
