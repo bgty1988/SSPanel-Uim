@@ -26,6 +26,86 @@
                         </div>
                     </div>
 
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-main">
+                                <div class="card-inner">
+                                    <p class="card-heading">配置二维码</p>
+
+                                    <nav class="tab-nav">
+                                        <ul class="nav nav-list">
+                                            <li {if $ssr_prefer}class="active"{/if}>
+                                                <a class="" data-toggle="tab" href="#ssr_qrcode">
+                                                    <i class="icon icon-lg">airplanemode_active</i>
+                                                    &nbsp;ShadowsocksR
+                                                </a>
+                                            </li>
+                                            <li {if !$ssr_prefer}class="active"{/if}>
+                                                <a class="" data-toggle="tab" href="#ss_qrcode">
+                                                    <i class="icon icon-lg">flight_takeoff</i>
+                                                    &nbsp;Shadowsocks
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div class="tab-pane fade {if $ssr_prefer}active in{/if}" id="ssr_qrcode">
+                                        {if URL::SSRCanConnect($user, $mu)}
+                                            {if $ssr_item['obfs']=="v2ray"}
+                                                <p>您好，Shadowsocks V2Ray-Plugin 节点需要您的加密方式使用 AEAD 系列。请您到 资料编辑
+                                                    页面修改后再来查看此处。</p>
+                                            {else}
+                                                <div class="text-center">
+                                                    <div id="ss-qr-n" class="qr-center"></div>
+                                                </div>
+                                            {/if}
+                                        {else}
+                                            <p>您好，您目前的 加密方式，混淆，或者协议设置在 ShadowsocksR 客户端下无法连接。请您选用 Shadowsocks 客户端来连接，或者到
+                                                资料编辑 页面修改后再来查看此处。</p>
+                                        {/if}
+                                    </div>
+                                    <div class="tab-pane fade {if !$ssr_prefer}active in{/if}" id="ss_qrcode">
+                                        {if URL::SSCanConnect($user, $mu)}
+                                            {if $ss_item['obfs']=="v2ray" && URL::CanMethodConnect($user->method)!=2}
+                                                <p>您好，Shadowsocks V2Ray-Plugin 节点需要您的加密方式使用 AEAD 系列。请您到 资料编辑
+                                                    页面修改后再来查看此处。</p>
+                                            {else}
+                                                <nav class="tab-nav">
+                                                    <ul class="nav nav-list">
+                                                        <li class="active">
+                                                            <a class="" data-toggle="tab" href="#ss_qrcode_normal">
+                                                                <i class="icon icon-lg">android</i>
+                                                                &nbsp;其他平台
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="" data-toggle="tab" href="#ss_qrcode_win">
+                                                                <i class="icon icon-lg">desktop_windows</i>
+                                                                &nbsp;Windows
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                                <div class="tab-pane fade active in" id="ss_qrcode_normal">
+                                                    <div class="text-center">
+                                                        <div id="ss-qr" class="qr-center"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="ss_qrcode_win">
+                                                    <div class="text-center">
+                                                        <div id="ss-qr-win" class="qr-center"></div>
+                                                    </div>
+                                                </div>
+                                            {/if}
+                                        {else}
+                                            <p>您好，您目前的 加密方式，混淆，或者协议设置在 Shadowsocks 客户端下无法连接。请您选用 ShadowsocksR 客户端来连接，或者到
+                                                资料编辑 页面修改后再来查看此处。</p>
+                                        {/if}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-lg-12 col-sm-12">
                         <div class="card">
@@ -213,87 +293,6 @@
                                                 </p>
                                                 <p><a href="{URL::getItemUrl($ss_item, 1)}">iOS 上用 Safari 打开点我即可直接添加</a>
                                                 </p>
-                                            {/if}
-                                        {else}
-                                            <p>您好，您目前的 加密方式，混淆，或者协议设置在 Shadowsocks 客户端下无法连接。请您选用 ShadowsocksR 客户端来连接，或者到
-                                                资料编辑 页面修改后再来查看此处。</p>
-                                        {/if}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-main">
-                                <div class="card-inner">
-                                    <p class="card-heading">配置二维码</p>
-
-                                    <nav class="tab-nav">
-                                        <ul class="nav nav-list">
-                                            <li {if $ssr_prefer}class="active"{/if}>
-                                                <a class="" data-toggle="tab" href="#ssr_qrcode">
-                                                    <i class="icon icon-lg">airplanemode_active</i>
-                                                    &nbsp;ShadowsocksR
-                                                </a>
-                                            </li>
-                                            <li {if !$ssr_prefer}class="active"{/if}>
-                                                <a class="" data-toggle="tab" href="#ss_qrcode">
-                                                    <i class="icon icon-lg">flight_takeoff</i>
-                                                    &nbsp;Shadowsocks
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                    <div class="tab-pane fade {if $ssr_prefer}active in{/if}" id="ssr_qrcode">
-                                        {if URL::SSRCanConnect($user, $mu)}
-                                            {if $ssr_item['obfs']=="v2ray"}
-                                                <p>您好，Shadowsocks V2Ray-Plugin 节点需要您的加密方式使用 AEAD 系列。请您到 资料编辑
-                                                    页面修改后再来查看此处。</p>
-                                            {else}
-                                                <div class="text-center">
-                                                    <div id="ss-qr-n" class="qr-center"></div>
-                                                </div>
-                                            {/if}
-                                        {else}
-                                            <p>您好，您目前的 加密方式，混淆，或者协议设置在 ShadowsocksR 客户端下无法连接。请您选用 Shadowsocks 客户端来连接，或者到
-                                                资料编辑 页面修改后再来查看此处。</p>
-                                        {/if}
-                                    </div>
-                                    <div class="tab-pane fade {if !$ssr_prefer}active in{/if}" id="ss_qrcode">
-                                        {if URL::SSCanConnect($user, $mu)}
-                                            {if $ss_item['obfs']=="v2ray" && URL::CanMethodConnect($user->method)!=2}
-                                                <p>您好，Shadowsocks V2Ray-Plugin 节点需要您的加密方式使用 AEAD 系列。请您到 资料编辑
-                                                    页面修改后再来查看此处。</p>
-                                            {else}
-                                                <nav class="tab-nav">
-                                                    <ul class="nav nav-list">
-                                                        <li class="active">
-                                                            <a class="" data-toggle="tab" href="#ss_qrcode_normal">
-                                                                <i class="icon icon-lg">android</i>
-                                                                &nbsp;其他平台
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="" data-toggle="tab" href="#ss_qrcode_win">
-                                                                <i class="icon icon-lg">desktop_windows</i>
-                                                                &nbsp;Windows
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                                <div class="tab-pane fade active in" id="ss_qrcode_normal">
-                                                    <div class="text-center">
-                                                        <div id="ss-qr" class="qr-center"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="ss_qrcode_win">
-                                                    <div class="text-center">
-                                                        <div id="ss-qr-win" class="qr-center"></div>
-                                                    </div>
-                                                </div>
                                             {/if}
                                         {else}
                                             <p>您好，您目前的 加密方式，混淆，或者协议设置在 Shadowsocks 客户端下无法连接。请您选用 ShadowsocksR 客户端来连接，或者到
