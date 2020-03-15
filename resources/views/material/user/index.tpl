@@ -313,14 +313,17 @@ table tr td:first-child {
                                                     <button class="copy-text btn btn-subscription col-xx-12 col-sm-3 col-lg-2" type="button" data-clipboard-text="{$subUrl}{$ssr_sub_token}">点击复制</button>
                                                 </div>
                                                 <p>您好，目前的 加密方式，混淆，协议请您选用 ShadowsocksR 客户端来连接</p>
-                                                <p>请通过订阅链接，导入您的节点，并定期更新~</p>
+                                                <p>请通过订阅链接，导入您的节点，并定期更新。</p>
+                                                <p>如果需要独立节点，请到节点列表中单独查看。</p>
                                                 {/if}
-                                            {$pre_user = URL::cloneUser($user)}
 
+                                                {$pre_user = URL::cloneUser($user)}
                                                 {$user = URL::getSSRConnectInfo($pre_user)}
                                                 {$ssr_url_all = URL::getAllUrl($pre_user, 0, 0)}
                                                 {$ssr_url_all_mu = URL::getAllUrl($pre_user, 1, 0)}
                                                 {if URL::SSRCanConnect($user)}
+
+                                                {if $user->isAdmin()}
                                                 <table class="table">
                                                     <tbody>
                                                         <tr>
@@ -349,7 +352,7 @@ table tr td:first-child {
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                {if $user->isAdmin()}
+
                                                 <!--<br>
 
                                                  {if $mergeSub!='true'}
@@ -388,10 +391,9 @@ table tr td:first-child {
                                                     {/if}
 
                                                 {else}
-                                                    <p>您好，您目前的 加密方式，混淆，或者协议设置在 ShadowsocksR 客户端下无法连接。请您选用 Shadowsocks
-                                                        客户端来连接，或者到 资料编辑 页面修改后再来查看此处</p>
-                                                    <p>同时, ShadowsocksR 单端口多用户的连接不受您设置的影响,您可以在此使用相应的客户端进行连接~</p>
-                                                    <p>请注意，在当前状态下您的 SSR 订阅链接已经失效，您无法通过此种方式导入节点</p>
+                                                <p>您好，目前的 加密方式，混淆，协议请您选用 ShadowsocksR 客户端来连接</p>
+                                                <p>请通过订阅链接，导入您的节点，并定期更新。</p>
+                                                <p>如果需要独立节点，请到节点列表中单独查看。</p>
                                                 {/if}
 
                                         </div>
