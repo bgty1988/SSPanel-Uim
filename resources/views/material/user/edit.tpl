@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-
+                {if $user->isAdmin()}
                 <div class="card margin-bottom-no">
                     <div class="card-main">
                         <div class="card-inner">
@@ -132,9 +132,8 @@
                         </div>
                     </div>
                 </div>
-
+                {/if}
             </div>
-
 
             <div class="col-xx-12 col-sm-6">
 
@@ -182,7 +181,7 @@
                         </div>
                     </div>
                 </div>
-
+                {if $user->isAdmin()}
                 <div class="card margin-bottom-no">
                     <div class="card-main">
                         <div class="card-inner">
@@ -209,7 +208,7 @@
                         </div>
                     </div>
                 </div>
-
+                {/if}
                 <div class="card margin-bottom-no">
                     <div class="card-main">
                         <div class="card-inner">
@@ -257,8 +256,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="card margin-bottom-no">
+                <div class="card margin-bottom-no" style="display: none;">
                     <div class="card-main">
                         <div class="card-inner">
                             <div class="card-inner">
@@ -314,7 +312,6 @@
                         </div>
                     </div>
                 </div>
-
                 {if $config['port_price']>=0 || $config['port_price_specify']>=0}
                     <div class="card margin-bottom-no">
                         <div class="card-main">
