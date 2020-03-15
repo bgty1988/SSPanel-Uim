@@ -274,18 +274,45 @@ table tr td:first-child {
                                         <li {if $ssr_prefer}class="active"{/if}>
                                             <a class="" data-toggle="tab" href="#all_ssr"><i class="icon icon-lg">airplanemode_active</i>&nbsp;SSR</a>
                                         </li>
-                                        <li {if !$ssr_prefer}class="active"{/if}>
+                                        {if $user->isAdmin()}
+                                        <!-- <li {if !$ssr_prefer}class="active"{/if} >
                                             <a class="" data-toggle="tab" href="#all_ss"><i class="icon icon-lg">flight_takeoff</i>&nbsp;SS/SSD</a>
                                         </li>
 
                                         <li>
                                             <a class="" data-toggle="tab" href="#all_v2ray"><i class="icon icon-lg">flight_land</i>&nbsp;V2RAY</a>
-                                        </li>
+                                        </li> -->
+                                        {/if}
                                     </ul>
                                 </nav>
                                 <div>
                                     <div class="tab-content">
                                         <div class="tab-pane fade {if $ssr_prefer}active in{/if}" id="all_ssr">
+                                            {if $mergeSub!='true'}
+                                                <div>
+                                                    <span class="icon icon-lg text-white">flash_auto</span> 普通节点订阅地址：
+                                                </div>
+                                                <div class="float-clear">
+                                                    <input type="text" class="input form-control form-control-monospace cust-link col-xx-12 col-sm-8 col-lg-7" name="input1" value="{$subUrl}{$ssr_sub_token}?mu=0" readonly="true">
+                                                    <button class="copy-text btn btn-subscription col-xx-12 col-sm-3 col-lg-2" type="button" data-clipboard-text="{$subUrl}{$ssr_sub_token}?mu=0">点击复制</button>
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    <span class="icon icon-lg text-white">flash_auto</span> 单端口节点订阅地址：
+                                                </div>
+                                                <div class="float-clear">
+                                                    <input type="text" class="input form-control form-control-monospace cust-link col-xx-12 col-sm-8 col-lg-7" name="input1" value="{$subUrl}{$ssr_sub_token}?mu=1" readonly="true">
+                                                    <button class="copy-text btn btn-subscription col-xx-12 col-sm-3 col-lg-2" type="button" data-clipboard-text="{$subUrl}{$ssr_sub_token}?mu=1">点击复制</button>
+                                                </div>
+                                                {else}
+                                                <div>
+                                                    <span class="icon icon-lg text-white">flash_auto</span> 订阅地址：
+                                                </div>
+                                                <div class="float-clear">
+                                                    <input type="text" class="input form-control form-control-monospace cust-link col-xx-12 col-sm-8 col-lg-7" name="input1" value="{$subUrl}{$ssr_sub_token}" readonly="true">
+                                                    <button class="copy-text btn btn-subscription col-xx-12 col-sm-3 col-lg-2" type="button" data-clipboard-text="{$subUrl}{$ssr_sub_token}">点击复制</button>
+                                                </div>
+                                                {/if}
                                             {$pre_user = URL::cloneUser($user)}
 
                                                 {$user = URL::getSSRConnectInfo($pre_user)}
@@ -320,10 +347,10 @@ table tr td:first-child {
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                {if $user->isAdmin()}
+                                                <!--<br>
 
-                                                <br>
-
-                                                {if $mergeSub!='true'}
+                                                 {if $mergeSub!='true'}
                                                 <div>
                                                     <span class="icon icon-lg text-white">flash_auto</span> 普通节点订阅地址：
                                                 </div>
@@ -347,10 +374,10 @@ table tr td:first-child {
                                                     <input type="text" class="input form-control form-control-monospace cust-link col-xx-12 col-sm-8 col-lg-7" name="input1" value="{$subUrl}{$ssr_sub_token}" readonly="true">
                                                     <button class="copy-text btn btn-subscription col-xx-12 col-sm-3 col-lg-2" type="button" data-clipboard-text="{$subUrl}{$ssr_sub_token}">点击复制</button>
                                                 </div>
+                                                {/if} 
+
+                                                <br>-->
                                                 {/if}
-
-                                                <br>
-
                                                     {if $mergeSub!='true'}
                                                         <button class="copy-text btn btn-subscription" type="button" data-clipboard-text="{$ssr_url_all}">点击复制 SSR 普通端口节点链接</button>
                                                         <button class="copy-text btn btn-subscription" type="button" data-clipboard-text="{$ssr_url_all_mu}">点击复制 SSR 单端口多用户链接</button>
@@ -450,13 +477,6 @@ table tr td:first-child {
                                         <li {if $ssr_prefer}class="active"{/if}>
                                             <a class="" data-toggle="tab" href="#all_ssr_client"><i class="icon icon-lg">airplanemode_active</i>&nbsp;SSR</a>
                                         </li>
-                                        <li {if !$ssr_prefer}class="active"{/if}>
-                                            <a class="" data-toggle="tab" href="#all_ss_client"><i class="icon icon-lg">flight_takeoff</i>&nbsp;SS/SSD</a>
-                                        </li>
-                                        <li>
-                                            <a class="" data-toggle="tab" href="#all_v2ray_client"><i class="icon icon-lg">flight_land</i>&nbsp;V2RAY</a>
-                                        </li>
-
                                         {if $display_ios_class>=0}
                                         <li>
                                             <a class="" data-toggle="tab" href="#all_appid_client"><i class="icon icon-lg">phone_iphone</i>&nbsp;iOS 公共账号</a>
@@ -474,22 +494,6 @@ table tr td:first-child {
                                             <p><i class="icon icon-lg">phone_iphone</i> iOS：可以使用 Shadowrocket、Quantumult、Potatso 或 Potatso Lite</p>
                                             <p><i class="icon icon-lg">router</i> Koolshare 固件路由器/软路由：前往 <a href="https://github.com/hq450/fancyss_history_package" target="_blank">FancySS 下载页面</a></p>
                                         </div>
-                                        <div class="tab-pane fade {if !$ssr_prefer}active in{/if}" id="all_ss_client">
-                                            <p><i class="icon icon-lg">laptop_windows</i> Windows：下载 <a href="/ssr-download/ssd-win.7z" target="_blank">SSD Windows</a>，<a href="/ssr-download/ss-win.zip" target="_blank">Shadowsocks Windows</a> 或 <a href="/ssr-download/SSTap.7z" target="_blank">SSTap</a></p>
-                                            <p><i class="icon icon-lg">laptop_mac</i> macOS：<a href="/ssr-download/ss-mac.zip" target="_blank">下载 ShadowsocksX-NG</a></p>
-                                            <p><i class="icon icon-lg">laptop_windows</i> Linux（GUI）：<a href="/ssr-download/ssr-linux.AppImage" target="_blank">下载 Electron SSR</a></p>
-                                            <p><i class="icon icon-lg">android</i> Android：下载 <a href="/ssr-download/ss-android.apk">Shadowsocks Android</a> 或 <a href="/ssr-download/ssd-android.apk">SSD Android</a>。如果需要启用混淆还需要下载 <a href="/ssr-download/ss-android-obfs.apk">Simple-Obfs 混淆插件</a>。</p>
-                                            <p><i class="icon icon-lg">phone_iphone</i> iOS：可以使用 Shadowrocket、Quantumult、Potatso 或 Potatso Lite</p>
-                                            <p><i class="icon icon-lg">router</i> Koolshare 固件路由器/软路由：前往 <a href="https://github.com/hq450/fancyss_history_package" target="_blank">FancySS 下载页面</a></p>
-                                        </div>
-                                        <div class="tab-pane fade" id="all_v2ray_client">
-                                            <p><i class="icon icon-lg">laptop_windows</i> Windows：下载 <a href="/ssr-download/v2rayn.zip" target="_blank">V2RayN</a></p>
-                                            <p><i class="icon icon-lg">laptop_mac</i> macOS：请前往 <a href="https://github.com/yanue/V2rayU">V2RayU 页面</a> 下载</p>
-                                            <p><i class="icon icon-lg">android</i> Android：下载 <a href="/ssr-download/ss-android.apk">V2RayNG</a></p>
-                                            <p><i class="icon icon-lg">phone_iphone</i> iOS：可以使用 Shadowrocket</p>
-                                            <p><i class="icon icon-lg">router</i> Koolshare 固件路由器/软路由：前往 <a href="https://github.com/hq450/fancyss_history_package/tree/master/fancyss_X64" target="_blank">FancySS 历史下载页面</a> 下载 v2ray 插件</p>
-                                        </div>
-
                                         {if $display_ios_class>=0}
                                         <div class="tab-pane fade" id="all_appid_client">
                                             {if $user->class>=$display_ios_class && $user->get_top_up()>=$display_ios_topup}
