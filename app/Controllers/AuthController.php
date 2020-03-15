@@ -327,11 +327,11 @@ class AuthController extends BaseController
         $repasswd = $request->getParam('repasswd');
         $code = $request->getParam('code');
         $code = trim($code);
-        $imtype = $request->getParam('imtype');
+        // $imtype = $request->getParam('imtype');
         $emailcode = $request->getParam('emailcode');
         $emailcode = trim($emailcode);
-        $wechat = $request->getParam('wechat');
-        $wechat = trim($wechat);
+        // $wechat = $request->getParam('wechat');
+        // $wechat = trim($wechat);
         // check code
 
 
@@ -412,9 +412,9 @@ class AuthController extends BaseController
         }
 
         // check pwd length
-        if (strlen($passwd) < 8) {
+        if (strlen($passwd) < 6) {
             $res['ret'] = 0;
-            $res['msg'] = '密码请大于8位';
+            $res['msg'] = '密码请大于6位';
             return $response->getBody()->write(json_encode($res));
         }
 
@@ -425,20 +425,20 @@ class AuthController extends BaseController
             return $response->getBody()->write(json_encode($res));
         }
 
-        if ($imtype == '' || $wechat == '') {
-            $res['ret'] = 0;
-            $res['msg'] = '请填上你的联络方式';
-            return $response->getBody()->write(json_encode($res));
-        }
-
-        $user = User::where('im_value', $wechat)->where('im_type', $imtype)->first();
-        if ($user != null) {
-            $res['ret'] = 0;
-            $res['msg'] = '此联络方式已注册';
-            return $response->getBody()->write(json_encode($res));
-        }
+        // if ($imtype == '' || $wechat == '') {
+        //    $res['ret'] = 0;
+        //    $res['msg'] = '请填上你的联络方式';
+        //    return $response->getBody()->write(json_encode($res));
+        // }
+        
+        //$user = User::where('im_value', $wechat)->where('im_type', $imtype)->first();
+        //if ($user != null) {
+        //    $res['ret'] = 0;
+        //    $res['msg'] = '此联络方式已注册';
+        //    return $response->getBody()->write(json_encode($res));
+        //}
         if (Config::get('enable_email_verify') === 'true') {
-            EmailVerify::where('email', '=', $email)->delete();
+           EmailVerify::where('email', '=', $email)->delete();
         }
         // do reg user
         $user = new User();

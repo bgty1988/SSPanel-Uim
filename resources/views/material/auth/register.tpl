@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rowtocol">
+                    <!-- <div class="rowtocol">
                         <div class="auth-row">
                             <div class="form-group form-group-label dropdown">
                                 <label class="floating-label" for="imtype">选择您的联络方式</label>
@@ -76,7 +76,7 @@
                                 <input class="form-control maxwidth-auth" id="wechat" type="text">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     {if $config['register_mode'] == 'invite'}
                         <div class="rowtocol">
                             <div class="auth-row">
@@ -269,13 +269,13 @@ document.getElementById('passwd').addEventListener('input', checkStrong);
                         name: $$getValue('name'),
                         passwd: $$getValue('passwd'),
                         repasswd: $$getValue('repasswd'),
-                        wechat: $$getValue('wechat'),
+                        //wechat: $$getValue('wechat'),
 
                         {if $recaptcha_sitekey != null}
                         recaptcha: grecaptcha.getResponse(),
                         {/if}
 
-                        imtype: $$getValue('imtype'),
+                        //imtype: $$getValue('imtype'),
                         code{if $enable_email_verify == 'true'},
                         emailcode: $$getValue('email_code'){/if}{if $geetest_html != null},
                         geetest_challenge: validate.geetest_challenge,
