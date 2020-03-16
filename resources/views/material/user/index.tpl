@@ -32,9 +32,15 @@ table tr td:first-child {
                                 <div class="nodemiddle node-flex">
                                     <div class="nodetype">
                                         {if $user->class!=0}
-                                            <dd>VIP {$user->class}</dd>
-                                        {else}
+                                            {if $user->class == 1}
                                             <dd>普通用户</dd>
+                                            {elseif $user->class == 2}
+                                            <dd>高级用户</dd>
+                                            {else}
+                                            <dd>VIP {$user->class}</dd>
+                                            {/if}
+                                        {else}
+                                            <dd>免费用户</dd>
                                         {/if}
                                     </div>
                                 </div>
@@ -50,11 +56,11 @@ table tr td:first-child {
                         <div class="user-info-bottom">
                             <div class="nodeinfo node-flex">
                                 {if $user->class!=0}
-                                    <span><i class="icon icon-md">add_circle</i>到期流量清空</span>
+                                    <span><i class="icon icon-md">add_circle</i>按套餐计算流量</span>
                                 {else}
-                                    <span><i class="icon icon-md">add_circle</i>升级解锁 VIP 节点</span>
+                                    <span><i class="icon icon-md">add_circle</i>升级解锁 更高级 节点</span>
                                 {/if}
-                                <a href="/user/shop" class="card-tag tag-orange">商店</a>
+                                <a href="/user/shop" class="card-tag tag-orange" style="width:80px;text-align:center;">商店</a>
                             </div>
                         </div>
                     </div>
@@ -78,8 +84,8 @@ table tr td:first-child {
                         </div>
                         <div class="user-info-bottom">
                             <div class="nodeinfo node-flex">
-                                <span><i class="icon icon-md">attach_money</i>到期账户自动删除</span>
-                                <a href="/user/code" class="card-tag tag-green">充值</a>
+                                <span><i class="icon icon-md">attach_money</i>到期清空流量</span>
+                                <a href="/user/code" class="card-tag tag-green" style="width:80px;text-align:center;">充值</a>
                             </div>
                         </div>
                     </div>
