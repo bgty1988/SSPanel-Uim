@@ -237,6 +237,7 @@ class URL
     {
         $return_url = '';
         if (!$is_ss) {
+            $return_url .= self::getUserNote($user, $is_mu) . PHP_EOL;
             $return_url .= self::getUserTraffic($user, $is_mu) . PHP_EOL;
             $return_url .= self::getUserClassExpiration($user, $is_mu) . PHP_EOL;
         }
@@ -520,6 +521,13 @@ class URL
             }
         )->orderBy('priority', 'DESC')->orderBy('id')->first();
         $node_name = $node->name;
+        /***节点描述填写#偏移值***/
+        $temp = explode("#", $node->info);
+        $offset = 0;
+        if ($temp[1] != null && is_numeric($temp[1])) {
+            $offset = $temp[1];
+        }
+        /************/
         if ($relay_rule != null) {
             $node_name .= ' - ' . $relay_rule->dist_node()->name;
         }
@@ -530,10 +538,19 @@ class URL
             }
             $mu_user->obfs_param = $user->getMuMd5();
             $mu_user->protocol_param = $user->id . ':' . $user->passwd;
-            $user = $mu_user;
-            if (Config::get('mergeSub') != 'true') {
-                $node_name .= ' - ' . $mu_port . ' 单端口';
+            if ($user->is_admin) 
+            {
+            //if (Config::get('mergeSub') != 'true') {
+                $node_name .= ' - ' . $mu_port . ' 单/管';
+            //}
             }
+            else
+            {
+            if (Config::get('mergeSub') != 'true') {
+                $node_name .= ' - ' . $mu_port . ' 单';
+            }
+            }
+            $user = $mu_user;
         }
         if ($is_ss) {
             if (!self::SSCanConnect($user)) {
@@ -549,7 +566,7 @@ class URL
         if ($node->sort == 13) {
             $server = Tools::ssv2Array($node->server);
             $return_array['address'] = $server['add'];
-            $return_array['port'] = $server['port'];
+            $return_array['port'] = $user->port;
             $return_array['protocol'] = 'origin';
             $return_array['protocol_param'] = '';
             $return_array['path'] = $server['path'];
@@ -561,7 +578,10 @@ class URL
             }
         } else {
             $return_array['address'] = $node->server;
-            $return_array['port'] = $user->port;
+            // $return_array['port'] = $user->port;
+            /***端口偏移***/
+        	$return_array['port'] = $user->port + $offset;
+        	/************/
             $return_array['protocol'] = $user->protocol;
             $return_array['protocol_param'] = $user->protocol_param;
             $return_array['obfs'] = $user->obfs;
@@ -580,6 +600,22 @@ class URL
     public static function cloneUser($user)
     {
         return clone $user;
+    }
+
+    public static function getUserNote($user, $is_mu = 0)
+    {
+        $group_name = Config::get('appName');
+        if ($is_mu == 1 && Config::get('mergeSub') != 'true') {
+            $group_name .= ' - 单端口';
+        }
+        if (strtotime($user->expire_in) > time()) {
+            $percent = date('Y-m-d H:i:s', time());
+            //$ssurl = 'www.google.com:3:auth_chain_a:chacha20:tls1.2_ticket_auth:YnJlYWt3YWxs/?obfsparam=&protoparam=&remarks=' . Tools::base64_url_encode('更新时间：' . $percent) .  '&group=' . Tools::base64_url_encode($group_name);
+            $ssurl = 'www.google.com:3:auth_chain_a:chacha20:tls1.2_ticket_auth:YnJlYWt3YWxs/?obfsparam=&protoparam=&remarks=' . Tools::base64_url_encode('更新时间：' . $percent) .  '&group=' . Tools::base64_url_encode($group_name);
+        } else {
+            $ssurl = 'www.google.com:3:auth_chain_a:chacha20:tls1.2_ticket_auth:YnJlYWt3YWxs/?obfsparam=&protoparam=&remarks=' . Tools::base64_url_encode('账户已过期，请续费后使用') . '&group=' . Tools::base64_url_encode($group_name);
+        }
+        return 'ssr://' . Tools::base64_url_encode($ssurl);
     }
 
     public static function getUserTraffic($user, $is_mu = 0)
