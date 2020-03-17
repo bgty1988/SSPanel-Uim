@@ -47,18 +47,8 @@
                             <div class="card-main">
                                 <div class="shop-name">{$shop->name}</div>
                                 <div class="shop-price">{$shop->price}</div>
-                                <div class="shop-tat">
-                                    <span>{$shop->bandwidth()}</span> / <span>{$shop->class_expire()}</span>
-                                </div>
+
                                 <div class="shop-cube">
-                                    <div>
-                                        <div class="cube-detail">
-                                            <span>Lv.</span>{$shop->user_class()}
-                                        </div>
-                                        <div class="cube-title">
-                                            VIP
-                                        </div>
-                                    </div>
                                     <div>
                                         <div class="cube-detail">
                                             {if {$shop->connector()} == '0' }无限制{else}{$shop->connector()}
@@ -68,6 +58,23 @@
                                         <div class="cube-title">
                                             客户端数量
                                         </div>
+                                    </div>
+                                    <div>
+                                            {if $shop->user_class() == 1}
+                                            <div class="cube-detail">
+                                                普通线路
+                                            </div>
+                                            <div class="cube-title">
+                                                等级
+                                            </div>
+                                            {elseif $shop->user_class() == 2}
+                                            <div class="cube-detail">
+                                                高级线路
+                                            </div>
+                                            <div class="cube-title">
+                                                等级
+                                            </div>
+                                            {/if}
                                     </div>
                                     <div>
                                         <div class="cube-detail">
@@ -82,18 +89,22 @@
 
                                 </div>
                                 <div class="shop-content">
-                                    <div class="shop-content-left">账号有效期:</div>
-                                    <div class="shop-content-right">{$shop->expire()}<span>天</span></div>
-                                    <div class="shop-content-left">重置周期:</div>
-                                    <div class="shop-content-right">{if {$shop->reset()} == '0' }N / A{else}{$shop->reset_exp()}
-                                            <span>天</span>
-                                        {/if}</div>
+                                    <!-- <div class="shop-content-left">有效期:</div>
+                                    <div class="shop-content-right">{$shop->expire()}<span>天</span></div> -->
                                     <div class="shop-content-left">重置频率:</div>
-                                    <div class="shop-content-right">{if {$shop->reset()} == '0' }N / A{else}{$shop->reset_value()}
+                                    <!-- <div class="shop-content-right">{if {$shop->reset()} == '0' }N / A{else}{$shop->reset_value()}
                                             <span>G</span>
                                             / {$shop->reset()}
                                             <span>天</span>
-                                        {/if}</div>
+                                        {/if}</div> -->
+                                        <div class="shop-content-right">
+                                            {if {$shop->reset()} == '0' }N / A{else}{$shop->reset_value()}
+                                            <span>G</span>
+                                            / {$shop->reset()}
+                                            <span>天</span>
+                                            {/if}
+                                        </div>
+
                                 </div>
                                 <div class="shop-content-extra">
                                     {foreach $shop->content_extra() as $service}
