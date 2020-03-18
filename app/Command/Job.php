@@ -172,6 +172,28 @@ class Job
 
             if ($shop->reset() != 0 && $shop->reset_value() != 0 && $shop->reset_exp() != 0) {
                 $boughted_users[] = $bought->userid;
+                //------------------------------------------------------------------------------------------------------------------------------------------------------------
+                //     $ScFtqq_SCKEY = Config::get('ScFtqq_SCKEY');
+                //     $text = '所订购的订单 ID 流量被重置';
+                //     $postdata = http_build_query(
+                //     array(
+                //         'text' => (time() - $shop->reset_exp() * 86400 < $bought->datetime) . '.' . (int)((time() - $bought->datetime) / 86400) % $shop->reset() . '.' . (int)((time() - $bought->datetime) / 86400),
+                //         'desp' => $bought->userid . '-购买' . date('Y-m-d H:i:s', $bought->datetime) . '-' . ((time() - $bought->datetime) / 86400)
+                //     )
+                // );
+                // $opts = array(
+                //     'http' =>
+                //         array(
+                //             'method' => 'POST',
+                //             'header' => 'Content-type: application/x-www-form-urlencoded',
+                //             'content' => $postdata
+                //         )
+                // );
+                // $context = stream_context_create($opts);
+                // file_get_contents('https://sc.ftqq.com/' . $ScFtqq_SCKEY . '.send', false, $context);
+
+                //在多少天内满足,每多少天正好落上,不是超过购买当天
+                //则执行按照订单重置流量
                 if ((time() - $shop->reset_exp() * 86400 < $bought->datetime) && (int)((time() - $bought->datetime) / 86400) % $shop->reset() == 0 && (int)((time() - $bought->datetime) / 86400) != 0) {
                     echo('流量重置-' . $user->id . "\n");
                     $user->transfer_enable = Tools::toGB($shop->reset_value());
@@ -179,7 +201,6 @@ class Job
                     $user->d = 0;
                     $user->last_day_t = 0;
                     $user->save();
-
                     $subject = Config::get('appName') . '-您的流量被重置了';
                     $to = $user->email;
                     $text = '您好，根据您所订购的订单 ID:' . $bought->id . '，流量已经被重置为' . $shop->reset_value() . 'GB';
@@ -192,11 +213,12 @@ class Job
                     } catch (Exception $e) {
                         echo $e->getMessage();
                     }
+                    
                 }
             }
         }
 
-
+        //所有用户检查和重置流量,按指定哪天重置一次
         $users = User::all();
         foreach ($users as $user) {
             $user->last_day_t = ($user->u + $user->d);
@@ -247,6 +269,24 @@ class Job
         }
 
         self::updatedownload();
+
+        $ScFtqq_SCKEY = Config::get('ScFtqq_SCKEY');
+                    $postdata = http_build_query(
+                    array(
+                        'text' => Config::get('appName') . '...DailyJob已执行',
+                        'desp' => ''
+                    )
+                );
+                $opts = array(
+                    'http' =>
+                        array(
+                            'method' => 'POST',
+                            'header' => 'Content-type: application/x-www-form-urlencoded',
+                            'content' => $postdata
+                        )
+                );
+                $context = stream_context_create($opts);
+                file_get_contents('https://sc.ftqq.com/' . $ScFtqq_SCKEY . '.send', false, $context);
     }
 
     //   定时任务开启的情况下，每天自动检测有没有最新版的后端，github源来自Miku
