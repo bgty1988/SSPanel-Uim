@@ -14,8 +14,10 @@
                 <div class="card">
                     <div class="card-main">
                         <div class="card-inner">
-                            <p>商品不可叠加，新购商品会覆盖旧商品的效果。</p>
-                            <p>购买新套餐时，如果未关闭旧套餐自动续费，则旧套餐的自动续费依然生效。</p>
+                            <p>既有客户請在更新订阅后查看您的到期日，流量(每个周期)清零。</p>
+                            <p>请勿叠加购买产品，新购产品会覆盖已有产品的效果。</p>
+                            <p>遇到任何产品问题 请联络客服，将尽速回复。</p>
+                            <p>遇到任何产品问题 请联络客服，将尽速回复。</p>
                             <p><i class="icon icon-lg">attach_money</i>当前余额：<font color="#399AF2" size="5">{$user->money}</font> 元</p>
                         </div>
                     </div>
@@ -46,7 +48,7 @@
                         <div class="card">
                             <div class="card-main">
                                 <div class="shop-name">{$shop->name}</div>
-                                <div class="shop-price">{$shop->price}</div>
+                                <div class="shop-price">{(int)$shop->price}</div>
 
                                 <div class="shop-cube">
                                     <div>
