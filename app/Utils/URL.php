@@ -541,7 +541,9 @@ class URL
             if ($user->is_admin) 
             {
             //if (Config::get('mergeSub') != 'true') {
-                $node_name .= ' - ' . $mu_port . ' 单/管';
+                $user = $mu_user;
+                $node_name .= ' - ' . (int)($user->port + $offset) . ' 单/管';
+                //$node_name .= ' - ' . $mu_port . ' 单/管';
             //}
             }
             else
