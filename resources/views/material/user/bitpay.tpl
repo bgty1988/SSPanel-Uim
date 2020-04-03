@@ -12,7 +12,8 @@
 <div class="card-action">
     <div class="card-action-btn pull-left">
         <button class="btn btn-flat waves-attach" id="bitpaySubmit" name="type" onclick="bitpay('Crypto')">
-            <img src="https://bitpay.dev/img/mpay-zh.png" height="50px"/>
+            <!-- <img src="https://bitpay.dev/img/mpay-zh.png" height="50px"/> -->
+            <img src="https://cdn.mugglepay.com/dt/pay/logo/mplogo1.png" height="50px"/>
         </button>
     </div>
 </div>
